@@ -1,4 +1,4 @@
-const { sequelize } = require("./db");
+const { db } = require("./db");
 const { Band, Musician, Song } = require("./index");
 
 describe("Band, Musician, and Song Models", () => {
@@ -9,55 +9,135 @@ describe("Band, Musician, and Song Models", () => {
     // the 'sync' method will create tables based on the model class
     // by setting 'force:true' the tables are recreated each time the
     // test suite is run
-    await sequelize.sync({ force: true });
+    await db.sync({ force: true });
   });
 
   test("can create a Band", async () => {
-    // TODO - test creating a band
-    createdBand = await Band.create({
-      name: "RHCP",
-      genre: "alternative rock",
+    const band1 = await Band.create({
+      name: "test",
+      genre: "test",
     });
-    expect(createdBand).toEqual(
-      expect.objectContaining({ name: RCHP, genre: "alternative rock" })
+    expect(band1).toEqual(
+      expect.objectContaining({
+        name: "test",
+        genre: "test",
+      })
     );
   });
 
   test("can create a Musician", async () => {
-    // TODO - test creating a musician
-    expect("NO TEST").toBe("EXPECTED VALUE HERE");
+    const musician1 = await Musician.create({
+      name: "test",
+      instrument: "test",
+    });
+    expect(musician1).toEqual(
+      expect.objectContaining({
+        name: "test",
+        instrument: "test",
+      })
+    );
+  });
+
+  test("can create a Song", async () => {
+    const song1 = await Song.create({
+      title: "test",
+      year: 2000,
+      length: 180,
+    });
+    expect(song1).toEqual(
+      expect.objectContaining({
+        title: "test",
+        year: 2000,
+        length: 180,
+      })
+    );
   });
 
   test("can update a Band", async () => {
-    // TODO - test updating a band
-    createdBand = await Band.create({
-      name: "RHCP",
-      genre: "alternative rock",
+    const band1 = await Band.create({
+      name: "test",
+      genre: "test",
     });
-
-    updatedBand = await createdBand.update({
-      name: "arctic monkeys",
-    });
+    const updatedBand = await band1.update({ name: "test test" });
     expect(updatedBand).toEqual(
       expect.objectContaining({
-        name: "arctic monkeys",
-        genre: "alternative rock",
+        name: "test test",
+        genre: "test",
       })
     );
   });
 
   test("can update a Musician", async () => {
-    // TODO - test updating a musician
-    expect("NO TEST").toBe("EXPECTED VALUE HERE");
+    const musician1 = await Musician.create({
+      name: "test",
+      instrument: "test",
+    });
+    const updatedMusician = await musician1.update({ name: "test test" });
+    expect(updatedMusician).toEqual(
+      expect.objectContaining({
+        name: "test test",
+        instrument: "test",
+      })
+    );
+  });
+
+  test("can update a Song", async () => {
+    const song1 = await Song.create({
+      title: "test",
+      year: 2000,
+      length: 180,
+    });
+    const updatedSong = await song1.update({ title: "test test" });
+    expect(updatedSong).toEqual(
+      expect.objectContaining({
+        title: "test test",
+        year: 2000,
+        length: 180,
+      })
+    );
   });
 
   test("can delete a Band", async () => {
-    // TODO - test deleting a band
-    expect("NO TEST").toBe("EXPECTED VALUE HERE");
+    const band1 = await Band.create({
+      name: "test",
+      genre: "test",
+    });
+    const goneBand = await band1.destroy();
+    expect(goneBand).toEqual(
+      expect.objectContaining({
+        name: "test",
+        genre: "test",
+      })
+    );
   });
 
   test("can delete a Musician", async () => {
-    // TODO - test deleting a musician
-    expect("NO TEST").toBe("EXPECTED VALUE HERE");
+    const musician1 = await Musician.create({
+      name: "test",
+      instrument: "test",
+    });
+    const goneMusician = await musician1.destroy();
+    expect(goneMusician).toEqual(
+      expect.objectContaining({
+        name: "test",
+        instrument: "test",
+      })
+    );
+  });
+
+  test("can delete a Song", async () => {
+    const song1 = await Song.create({
+      title: "test",
+      year: 2000,
+      length: 180,
+    });
+    const goneSong = await song1.destroy();
+    expect(goneSong).toEqual(
+      expect.objectContaining({
+        title: "test",
+        year: 2000,
+        length: 180,
+      })
+    );
   });
 });

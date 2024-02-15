@@ -154,12 +154,40 @@ describe("Band, Musician, and Song Models", () => {
       name: "test",
       instrument: "test",
     });
-    myBand.addMusician(musician1);
-    myBand.addMusician(musician2);
+    await myBand.addMusician(musician1);
+    await myBand.addMusician(musician2);
     
     const takenMusicians = await myBand.getMusicians();
 
     expect(takenMusicians.length).toBe(2)
     expect(takenMusicians[0] instanceof Musician).toBeTruthy()
   })
+
+  test("Band can have many songs", async () => {
+    let myBand = await Band.create({
+      name: "test",
+      genre: "test",
+    });
+    let song1 = await Song.create({
+      title: "test",
+      year: "test",
+      length: "test",
+    });
+    let song2 = await Song.create({
+      title: "test",
+      year: "test",
+      length: "test",
+    });
+    await myBand.addSong(song1);
+    await myBand.addSong(song2);
+    
+    const takenSongs = await myBand.getSongs();
+
+    console.log(takenSongs)
+
+    expect(takenSongs.length).toBe(2)
+    expect(takenSongs[0] instanceof Song).toBeTruthy()
+    expect(takenSongs[1] instanceof Song).toBeTruthy()
+  })
+
 });

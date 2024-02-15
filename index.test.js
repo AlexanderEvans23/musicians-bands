@@ -140,4 +140,26 @@ describe("Band, Musician, and Song Models", () => {
       })
     );
   });
+
+  test("band can have many musicians", async () => {
+    const myBand = await Band.create({
+      name: "test",
+      genre: "test",
+    });
+    const musician1 = await Musician.create({
+      name: "test",
+      instrument: "test",
+    });
+    const musician2 = await Musician.create({
+      name: "test",
+      instrument: "test",
+    });
+    myBand.addMusician(musician1);
+    myBand.addMusician(musician2);
+    
+    const takenMusicians = await myBand.getMusicians();
+
+    expect(takenMusicians.length).toBe(2)
+    expect(takenMusicians[0] instanceof Musician).toBeTruthy()
+  })
 });
